@@ -35,6 +35,15 @@
       const player = ruffle.createPlayer();
       document.getElementById("flash-container").appendChild(player);
       player.load("sprinter.swf");
+
+      // Pause when not focused
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          player.pause();
+        } else {
+          player.play();
+        }
+      });
     </script>
   </body>
 </html>
