@@ -1,6 +1,6 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
+<html lang="en">
+<head>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
    <title>Moon</title>
@@ -11,7 +11,7 @@
        padding: 0;
        box-sizing: border-box;
      }
- 
+
      body {
        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
@@ -20,7 +20,7 @@
        height: 100vh;
        overflow: hidden;
      }
- 
+
      #sidebar {
        width: 250px;
        background-color: #111;
@@ -28,7 +28,7 @@
        display: flex;
        flex-direction: column;
      }
- 
+
      #sidebar input {
        width: 100%;
        padding: 10px;
@@ -39,7 +39,7 @@
        border: none;
        border-radius: 6px;
      }
- 
+
      .game-btn {
        background-color: #1c1c1c;
        color: white;
@@ -52,41 +52,41 @@
        border-radius: 6px;
        transition: background 0.3s;
      }
- 
+
      .game-btn:hover {
        background-color: #333;
      }
- 
+
      #content {
        flex-grow: 1;
        padding: 20px;
        position: relative;
      }
- 
+
      .game-container {
        display: none;
        width: 100%;
        height: 90vh;
      }
- 
+
      iframe {
        width: 100%;
        height: 100%;
        border: none;
        border-radius: 10px;
      }
- 
+
      #logo-header {
        text-align: center;
        margin-bottom: 20px;
      }
- 
+
      #logo-header h1 {
        font-size: 2rem;
        font-weight: bold;
        margin-bottom: 10px;
      }
- 
+
      /* Startup Loader */
      #startup-loader {
        position: fixed;
@@ -102,19 +102,19 @@
        justify-content: center;
        animation: fadeOut 1s ease 3s forwards;
      }
- 
+
      #startup-loader h1 {
        font-size: 3rem;
        color: white;
        animation: moveUp 1s ease 1s forwards;
      }
- 
+
      @keyframes moveUp {
        to {
          transform: translateY(-100px);
        }
      }
- 
+
      .loading-bar {
        width: 300px;
        height: 12px;
@@ -125,33 +125,33 @@
        opacity: 0;
        animation: fadeIn 1s ease 2s forwards;
      }
- 
+
      .loading-bar-fill {
        width: 0;
        height: 100%;
        background: linear-gradient(to right, #00c6ff, #0072ff);
        animation: fill 1s forwards 2.2s;
      }
- 
+
      @keyframes fill {
        to {
          width: 100%;
        }
      }
- 
+
      @keyframes fadeIn {
        to {
          opacity: 1;
        }
      }
- 
+
      @keyframes fadeOut {
        to {
          opacity: 0;
          pointer-events: none;
        }
      }
- 
+
      /* Game loader */
      #loader {
        position: absolute;
@@ -166,27 +166,27 @@
        align-items: center;
        z-index: 10;
      }
- 
+
      #loader h1 {
        font-size: 2.5rem;
        margin-bottom: 20px;
        color: #fff;
      }
- 
+
      /* Settings panel */
      #settings {
        display: none;
        margin-top: 20px;
      }
- 
+
      .setting-option {
        margin-bottom: 10px;
      }
- 
+
      .setting-option label {
        margin-left: 5px;
      }
- 
+
      .settings-btn {
        background-color: #444;
        color: white;
@@ -197,14 +197,14 @@
        cursor: pointer;
      }
    </style>
- </head>
- <body>
+</head>
+<body>
    <!-- Startup screen -->
    <div id="startup-loader">
      <h1>🌙 Moon</h1>
      <div class="loading-bar"><div class="loading-bar-fill"></div></div>
    </div>
- 
+
    <div id="sidebar">
      <div id="logo-header">
        <h1>🌙 Moon</h1>
@@ -215,8 +215,9 @@
      <button class="game-btn" onclick="showGame('doors')">Doors</button>
      <button class="game-btn" onclick="showGame('ngon')">N-Gon</button>
      <button class="game-btn" onclick="showGame('paper-minecraft')">Paper Minecraft</button>
+     <button class="game-btn" onclick="showGame('sprinter')">Sprinter</button>
      <button class="settings-btn" onclick="toggleSettings()">Settings</button>
- 
+
      <div id="settings">
        <div class="setting-option">
          <input type="checkbox" id="darkMode">
@@ -228,7 +229,7 @@
        </div>
      </div>
    </div>
- 
+
    <div id="content">
      <!-- Game Loader -->
      <div id="loader">
@@ -237,7 +238,7 @@
          <div class="loading-bar-fill"></div>
        </div>
      </div>
- 
+
      <div id="moonshowdown" class="game-container">
        <iframe src="MoonShowdown/index.html" title="Moon Showdown"></iframe>
      </div>
@@ -253,8 +254,19 @@
      <div id="paper-minecraft" class="game-container">
        <iframe src="Minecraft/index.html" title="Paper Minecraft"></iframe>
      </div>
+     <!-- Sprinter game -->
+     <div id="sprinter" class="game-container">
+       <h1>Welcome to the Sprinter Game</h1>
+       <div id="flash-container"></div>
+       <script>
+         const ruffle = window.RufflePlayer.newest();
+         const player = ruffle.createPlayer();
+         document.getElementById("flash-container").appendChild(player);
+         player.load("Sprinter/sprinter.swf");
+       </script>
+     </div>
    </div>
- 
+
    <script>
      function showGame(gameId) {
        const loader = document.getElementById('loader');
@@ -264,7 +276,7 @@
        fill.style.animation = 'none';
        void fill.offsetWidth;
        fill.style.animation = 'fill 1.2s forwards';
- 
+
        setTimeout(() => {
          document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
          const target = document.getElementById(gameId);
@@ -272,7 +284,7 @@
          loader.style.display = 'none';
        }, 1200);
      }
- 
+
      const searchInput = document.getElementById('search');
      searchInput.addEventListener('input', function () {
        const filter = this.value.toLowerCase();
@@ -282,11 +294,11 @@
          button.style.display = text.includes(filter) ? 'block' : 'none';
        });
      });
- 
+
      function toggleSettings() {
        const settings = document.getElementById('settings');
        settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
      }
    </script>
- </body>
- </html>
+</body>
+</html>
