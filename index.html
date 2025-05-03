@@ -139,572 +139,47 @@
     #sidebar.dark-mode {
       background-color: #222;
     }
-  </style>
-</head>
-<body>
-  <!-- Startup screen -->
-  <div id="startup-loader">
-    <h1>🌙 Moon</h1>
-    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
-  </div>
 
-  <!-- Sidebar -->
-  <div id="sidebar">
-    <div id="logo-header">
-      <h1>🌙 Moon</h1>
-    </div>
-    <input type="text" id="search" placeholder="Search games...">
-    <button class="game-btn" onclick="showGame('moonshowdown')">Moon Showdown - Made by owner</button>
-    <button class="game-btn" onclick="showGame('dungeon')">Dungeon</button>
-    <button class="game-btn" onclick="showGame('doors')">Doors</button>
-    <button class="game-btn" onclick="showGame('ngon')">N-Gon</button>
-    <button class="game-btn" onclick="showGame('paper-minecraft')">Paper Minecraft</button>
-    <button class="settings-btn" onclick="toggleSettings()">Settings</button>
-    <button class="settings-btn" onclick="toggleSidebar()">Toggle Sidebar</button>
-
-    <div id="settings">
-      <div class="setting-option">
-        <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
-        <label for="darkMode">Enable Dark Mode</label>
-      </div>
-      <div class="setting-option">
-        <input type="checkbox" id="sound" onchange="toggleSound()">
-        <label for="sound">Enable Sound Effects</label>
-      </div>
-      <div class="setting-option">
-        <label for="music">Select Background Music</label>
-        <select id="music" onchange="changeMusic()">
-          <option value="track1.mp3">Track 1</option>
-          <option value="track2.mp3">Track 2</option>
-          <option value="track3.mp3">Track 3</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- Content -->
-  <div id="content">
-    <!-- Game Loader -->
-    <div id="loader">
-      <h1>🌙 Moon</h1>
-      <div class="loading-bar">
-        <div class="loading-bar-fill"></div>
-      </div>
-    </div>
-
-    <!-- Game Containers -->
-    <div id="moonshowdown" class="game-container">
-      <iframe src="MoonShowdown/index.html" title="Moon Showdown"></iframe>
-    </div>
-    <div id="dungeon" class="game-container">
-      <iframe src="dungeon/index.html" title="Dungeon"></iframe>
-    </div>
-    <div id="doors" class="game-container">
-      <iframe src="Doors/index.html" title="Doors"></iframe>
-    </div>
-    <div id="ngon" class="game-container">
-      <iframe src="Ngon/index.html" title="N-Gon"></iframe>
-    </div>
-    <div id="paper-minecraft" class="game-container">
-      <iframe src="Minecraft/index.html" title="Paper Minecraft"></iframe>
-    </div>
-  </div>
-
-  <script>
-    // Toggle Sidebar
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const content = document.getElementById('content');
-      sidebar.classList.toggle('open');
-      content.style.marginLeft = sidebar.classList.contains('open') ? '250px' : '0';
-    }
-
-    // Show selected game
-    function showGame(gameId) {
-      const loader = document.getElementById('loader');
-      loader.style.display = 'flex';
-      const fill = loader.querySelector('.loading-bar-fill');
-      fill.style.width = '0';
-      fill.style.animation = 'none';
-      void fill.offsetWidth;
-      fill.style.animation = 'fill 1s forwards';
-
-      setTimeout(() => {
-        document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
-        const target = document.getElementById(gameId);
-        if (target) target.style.display = 'block';
-        loader.style.display = 'none';
-      }, 1200);
-    }
-
-    // Search Functionality
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('input', function () {
-      const filter = this.value.toLowerCase();
-      const buttons = document.querySelectorAll('.game-btn');
-      buttons.forEach(button => {
-        const text = button.textContent.toLowerCase();
-        button.style.display = text.includes(filter) ? 'block' : 'none';
-      });
-    });
-
-    // Toggle Dark Mode
-    function toggleDarkMode() {
-      const darkMode = document.getElementById('darkMode').checked;
-      if (darkMode) {
-        document.body.classList.add('dark-mode');
-        document.getElementById('sidebar').classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('sidebar').classList.remove('dark-mode');
-      }
-    }
-
-    // Toggle Sound
-    function toggleSound() {
-      const sound = document.getElementById('sound').checked;
-      // Handle sound effects here
-    }
-
-    // Change Background Music
-    function changeMusic() {
-      const musicSelect = document.getElementById('music');
-      const musicTrack = musicSelect.value;
-      // Load and play the selected music track
-      console.log('Selected music:', musicTrack);
-    }
-
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Moon</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-
-    #sidebar {
-      width: 250px;
-      background-color: #111;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      left: -250px;
-      top: 0;
-      bottom: 0;
-      transition: left 0.3s ease;
-    }
-
-    #sidebar.open {
-      left: 0;
-    }
-
-    #sidebar input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 1rem;
-      background-color: #1e1e1e;
-      color: white;
-      border: none;
-      border-radius: 6px;
-    }
-
-    .game-btn {
-      background-color: #1c1c1c;
-      color: white;
-      border: none;
-      padding: 12px;
-      margin-bottom: 10px;
-      text-align: left;
-      cursor: pointer;
-      font-size: 1rem;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-
-    .game-btn:hover {
-      background-color: #333;
-    }
-
-    #content {
-      flex-grow: 1;
-      padding: 20px;
-      position: relative;
-      margin-left: 250px;
-      transition: margin-left 0.3s ease;
-    }
-
-    #logo-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    #logo-header h1 {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    /* Game loader */
-    #loader {
-      position: absolute;
-      top: 0;
-      left: 0;
+    iframe {
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
+      border: none;
+    }
+
+    .game-container {
       display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
-
-    #loader h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #fff;
-    }
-
-    /* Settings panel */
-    #settings {
-      display: none;
-      margin-top: 20px;
-    }
-
-    .setting-option {
-      margin-bottom: 10px;
-    }
-
-    .setting-option label {
-      margin-left: 5px;
-    }
-
-    .settings-btn {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    /* Dark Theme Styles */
-    body.dark-mode {
-      background: linear-gradient(to right, #181818, #2b2b2b, #3c3c3c);
-    }
-
-    #sidebar.dark-mode {
-      background-color: #222;
-    }
-  </style>
-</head>
-<body>
-  <!-- Startup screen -->
-  <div id="startup-loader">
-    <h1>🌙 Moon</h1>
-    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
-  </div>
-
-  <!-- Sidebar -->
-  <div id="sidebar">
-    <div id="logo-header">
-      <h1>🌙 Moon</h1>
-    </div>
-    <input type="text" id="search" placeholder="Search games...">
-    <button class="game-btn" onclick="showGame('moonshowdown')">Moon Showdown - Made by owner</button>
-    <button class="game-btn" onclick="showGame('dungeon')">Dungeon</button>
-    <button class="game-btn" onclick="showGame('doors')">Doors</button>
-    <button class="game-btn" onclick="showGame('ngon')">N-Gon</button>
-    <button class="game-btn" onclick="showGame('paper-minecraft')">Paper Minecraft</button>
-    <button class="settings-btn" onclick="toggleSettings()">Settings</button>
-    <button class="settings-btn" onclick="toggleSidebar()">Toggle Sidebar</button>
-
-    <div id="settings">
-      <div class="setting-option">
-        <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
-        <label for="darkMode">Enable Dark Mode</label>
-      </div>
-      <div class="setting-option">
-        <input type="checkbox" id="sound" onchange="toggleSound()">
-        <label for="sound">Enable Sound Effects</label>
-      </div>
-      <div class="setting-option">
-        <label for="music">Select Background Music</label>
-        <select id="music" onchange="changeMusic()">
-          <option value="track1.mp3">Track 1</option>
-          <option value="track2.mp3">Track 2</option>
-          <option value="track3.mp3">Track 3</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- Content -->
-  <div id="content">
-    <!-- Game Loader -->
-    <div id="loader">
-      <h1>🌙 Moon</h1>
-      <div class="loading-bar">
-        <div class="loading-bar-fill"></div>
-      </div>
-    </div>
-
-    <!-- Game Containers -->
-    <div id="moonshowdown" class="game-container">
-      <iframe src="MoonShowdown/index.html" title="Moon Showdown"></iframe>
-    </div>
-    <div id="dungeon" class="game-container">
-      <iframe src="dungeon/index.html" title="Dungeon"></iframe>
-    </div>
-    <div id="doors" class="game-container">
-      <iframe src="Doors/index.html" title="Doors"></iframe>
-    </div>
-    <div id="ngon" class="game-container">
-      <iframe src="Ngon/index.html" title="N-Gon"></iframe>
-    </div>
-    <div id="paper-minecraft" class="game-container">
-      <iframe src="Minecraft/index.html" title="Paper Minecraft"></iframe>
-    </div>
-  </div>
-
-  <script>
-    // Toggle Sidebar
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const content = document.getElementById('content');
-      sidebar.classList.toggle('open');
-      content.style.marginLeft = sidebar.classList.contains('open') ? '250px' : '0';
-    }
-
-    // Show selected game
-    function showGame(gameId) {
-      const loader = document.getElementById('loader');
-      loader.style.display = 'flex';
-      const fill = loader.querySelector('.loading-bar-fill');
-      fill.style.width = '0';
-      fill.style.animation = 'none';
-      void fill.offsetWidth;
-      fill.style.animation = 'fill 1s forwards';
-
-      setTimeout(() => {
-        document.querySelectorAll('.game-container').forEach(c => c.style.display = 'none');
-        const target = document.getElementById(gameId);
-        if (target) target.style.display = 'block';
-        loader.style.display = 'none';
-      }, 1200);
-    }
-
-    // Search Functionality
-    const searchInput = document.getElementById('search');
-    searchInput.addEventListener('input', function () {
-      const filter = this.value.toLowerCase();
-      const buttons = document.querySelectorAll('.game-btn');
-      buttons.forEach(button => {
-        const text = button.textContent.toLowerCase();
-        button.style.display = text.includes(filter) ? 'block' : 'none';
-      });
-    });
-
-    // Toggle Dark Mode
-    function toggleDarkMode() {
-      const darkMode = document.getElementById('darkMode').checked;
-      if (darkMode) {
-        document.body.classList.add('dark-mode');
-        document.getElementById('sidebar').classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('sidebar').classList.remove('dark-mode');
-      }
-    }
-
-    // Toggle Sound
-    function toggleSound() {
-      const sound = document.getElementById('sound').checked;
-      // Handle sound effects here
-    }
-
-    // Change Background Music
-    function changeMusic() {
-      const musicSelect = document.getElementById('music');
-      const musicTrack = musicSelect.value;
-      // Load and play the selected music track
-      console.log('Selected music:', musicTrack);
-    }
-
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Moon</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-
-    #sidebar {
-      width: 250px;
-      background-color: #111;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      left: -250px;
-      top: 0;
-      bottom: 0;
-      transition: left 0.3s ease;
-    }
-
-    #sidebar.open {
-      left: 0;
-    }
-
-    #sidebar input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      font-size: 1rem;
-      background-color: #1e1e1e;
-      color: white;
-      border: none;
-      border-radius: 6px;
-    }
-
-    .game-btn {
-      background-color: #1c1c1c;
-      color: white;
-      border: none;
-      padding: 12px;
-      margin-bottom: 10px;
-      text-align: left;
-      cursor: pointer;
-      font-size: 1rem;
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-
-    .game-btn:hover {
-      background-color: #333;
-    }
-
-    #content {
-      flex-grow: 1;
-      padding: 20px;
-      position: relative;
-      margin-left: 250px;
-      transition: margin-left 0.3s ease;
-    }
-
-    #logo-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    #logo-header h1 {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    /* Game loader */
-    #loader {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
     }
 
-    #loader h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #fff;
+    .loading-bar {
+      width: 300px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    /* Settings panel */
-    #settings {
-      display: none;
-      margin-top: 20px;
+    .loading-bar-fill {
+      width: 0;
+      height: 100%;
+      background: #0ff;
+      animation: fill 1s forwards;
     }
 
-    .setting-option {
-      margin-bottom: 10px;
-    }
-
-    .setting-option label {
-      margin-left: 5px;
-    }
-
-    .settings-btn {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    /* Dark Theme Styles */
-    body.dark-mode {
-      background: linear-gradient(to right, #181818, #2b2b2b, #3c3c3c);
-    }
-
-    #sidebar.dark-mode {
-      background-color: #222;
+    @keyframes fill {
+      to {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Startup screen -->
   <div id="startup-loader">
     <h1>🌙 Moon</h1>
     <div class="loading-bar"><div class="loading-bar-fill"></div></div>
   </div>
 
-  <!-- Sidebar -->
   <div id="sidebar">
     <div id="logo-header">
       <h1>🌙 Moon</h1>
@@ -715,6 +190,7 @@
     <button class="game-btn" onclick="showGame('doors')">Doors</button>
     <button class="game-btn" onclick="showGame('ngon')">N-Gon</button>
     <button class="game-btn" onclick="showGame('paper-minecraft')">Paper Minecraft</button>
+    <button class="game-btn" onclick="showGame('annihilate')">Annihilate</button>
     <button class="settings-btn" onclick="toggleSettings()">Settings</button>
     <button class="settings-btn" onclick="toggleSidebar()">Toggle Sidebar</button>
 
@@ -738,9 +214,7 @@
     </div>
   </div>
 
-  <!-- Content -->
   <div id="content">
-    <!-- Game Loader -->
     <div id="loader">
       <h1>🌙 Moon</h1>
       <div class="loading-bar">
@@ -748,7 +222,6 @@
       </div>
     </div>
 
-    <!-- Game Containers -->
     <div id="moonshowdown" class="game-container">
       <iframe src="MoonShowdown/index.html" title="Moon Showdown"></iframe>
     </div>
@@ -764,10 +237,12 @@
     <div id="paper-minecraft" class="game-container">
       <iframe src="Minecraft/index.html" title="Paper Minecraft"></iframe>
     </div>
+    <div id="annihilate" class="game-container">
+      <iframe src="annihilate/index.html" title="Annihilate"></iframe>
+    </div>
   </div>
 
   <script>
-    // Toggle Sidebar
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const content = document.getElementById('content');
@@ -775,7 +250,6 @@
       content.style.marginLeft = sidebar.classList.contains('open') ? '250px' : '0';
     }
 
-    // Show selected game
     function showGame(gameId) {
       const loader = document.getElementById('loader');
       loader.style.display = 'flex';
@@ -793,7 +267,6 @@
       }, 1200);
     }
 
-    // Search Functionality
     const searchInput = document.getElementById('search');
     searchInput.addEventListener('input', function () {
       const filter = this.value.toLowerCase();
@@ -804,32 +277,27 @@
       });
     });
 
-    // Toggle Dark Mode
     function toggleDarkMode() {
       const darkMode = document.getElementById('darkMode').checked;
-      if (darkMode) {
-        document.body.classList.add('dark-mode');
-        document.getElementById('sidebar').classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-        document.getElementById('sidebar').classList.remove('dark-mode');
-      }
+      document.body.classList.toggle('dark-mode', darkMode);
+      document.getElementById('sidebar').classList.toggle('dark-mode', darkMode);
     }
 
-    // Toggle Sound
+    function toggleSettings() {
+      const settings = document.getElementById('settings');
+      settings.style.display = settings.style.display === 'block' ? 'none' : 'block';
+    }
+
     function toggleSound() {
       const sound = document.getElementById('sound').checked;
-      // Handle sound effects here
+      // Handle sound toggle
     }
 
-    // Change Background Music
     function changeMusic() {
-      const musicSelect = document.getElementById('music');
-      const musicTrack = musicSelect.value;
-      // Load and play the selected music track
-      console.log('Selected music:', musicTrack);
+      const track = document.getElementById('music').value;
+      console.log('Selected music:', track);
+      // Handle background music
     }
-
   </script>
 </body>
 </html>
